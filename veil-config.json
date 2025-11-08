@@ -1,0 +1,13 @@
+{
+  "veilDensity": 0.42,
+  "fieldRadius": 1200,
+  "terrainProximity": true,
+  "photonCount": 64,
+  "shimmerColor": "#00f0ff",
+  "throwIntensity": 0.8,
+  "activationSignal": "breach",
+  "choreography": {
+    "veilFirst": true,
+    "photonFollow": true
+  }
+}
