@@ -1,5 +1,5 @@
 // velmari-siren.js
-// Launches Velmari siren in sandboxed iframe to prevent media stack collision and autoplay disruption
+// Launches Velmari siren in sandboxed iframe after YouTube playback begins
 
 export function playVelmariSiren() {
   const iframe = document.createElement('iframe');
