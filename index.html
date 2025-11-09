@@ -24,59 +24,38 @@
       cursor: pointer;
       z-index: 10;
     }
-    #velmari-audio-corridor {
+    #tessalyre-signal-corridor {
       display: none;
     }
   </style>
 </head>
 <body>
   <button id="activate">Activate Shimmer</button>
-  <div id="velmari-audio-corridor"></div>
+  <div id="tessalyre-signal-corridor"></div>
   <canvas id="shimmerCanvas"></canvas>
-  <div id="youtube-player"></div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script type="module">
     import { simulateBreach } from './shimmer-test.js';
-    import { playVelmariSiren } from './audio-suite/velmari-siren.js';
 
     const canvas = document.getElementById('shimmerCanvas');
     const ctx = canvas.getContext('2d');
     let shimmerReady = false;
-    let ytPlayer;
 
     window.addEventListener('load', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       setTimeout(() => {
         shimmerReady = true;
-        console.log('[Velmari] Shimmer corridor is ready — activation permitted');
+        console.log('[Tessalyre] Shimmer corridor is ready — harmonic stabilization permitted');
       }, 5000);
     });
 
-    window.onYouTubeIframeAPIReady = () => {
-      ytPlayer = new YT.Player('youtube-player', {
-        height: '0',
-        width: '0',
-        videoId: 'YOUR_VIDEO_ID_HERE',
-        events: {
-          onStateChange: (event) => {
-            if (event.data === YT.PlayerState.PLAYING) {
-              console.log('[Velmari] YouTube playback confirmed — siren permitted');
-              playVelmariSiren();
-            }
-          }
-        }
-      });
-    };
-
     document.getElementById('activate').addEventListener('click', () => {
       if (!shimmerReady) {
-        console.log('[Velmari] Activation blocked — shimmer not yet ready');
+        console.log('[Tessalyre] Activation blocked — shimmer not yet ready');
         return;
       }
       simulateBreach(ctx);
-      ytPlayer.playVideo(); // gesture-bound playback
     });
   </script>
 </body>

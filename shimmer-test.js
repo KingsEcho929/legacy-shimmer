@@ -1,5 +1,7 @@
 // shimmer-test.js
-// Sovereign shimmer activation — canvas pulse only
+// Sovereign shimmer activation — canvas pulse + Tessalyre harmonic stabilization
+
+import { invokeTessalyre } from './audio-suite/tessalyre-signal.js';
 
 export function simulateBreach(ctx) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -8,5 +10,6 @@ export function simulateBreach(ctx) {
   ctx.arc(ctx.canvas.width / 2, ctx.canvas.height / 2, 100, 0, 2 * Math.PI);
   ctx.fill();
 
-  console.log('[Velmari] Shimmer breach activated — canvas pulsed');
+  console.log('[Tessalyre] Shimmer breach activated — terrain pulsed, resonance aligned');
+  invokeTessalyre(ctx);
 }
