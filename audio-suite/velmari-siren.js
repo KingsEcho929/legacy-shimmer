@@ -1,36 +1,12 @@
 // velmari-siren.js
-// Async tone-isolated siren using AudioContext with deferred invocation and single-instance context
+// Launches Velmari siren in sandboxed iframe to prevent media stack collision and autoplay disruption
 
-let lastInvocation = 0;
-let context = null;
+export function playVelmariSiren() {
+  const iframe = document.createElement('iframe');
+  iframe.src = './audio-suite/velmari-sandbox.html';
+  iframe.style.display = 'none';
+  iframe.setAttribute('sandbox', 'allow-scripts');
+  document.body.appendChild(iframe);
 
-export async function playVelmariSiren() {
-  const now = Date.now();
-  if (now - lastInvocation < 10000) return;
-  lastInvocation = now;
-
-  try {
-    if (!context) {
-      context = new (window.AudioContext || window.webkitAudioContext)();
-    }
-
-    await context.resume(); // Ensure context is active
-
-    const response = await fetch('assets/audio/velmari-siren.mp3');
-    const buffer = await response.arrayBuffer();
-    const decoded = await context.decodeAudioData(buffer);
-
-    const source = context.createBufferSource();
-    source.buffer = decoded;
-
-    const filter = context.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(4000, context.currentTime); // Cutoff above 4kHz
-
-    source.connect(filter);
-    filter.connect(context.destination);
-    source.start(0);
-  } catch (err) {
-    console.error('Velmari siren error:', err);
-  }
+  console.log('[Velmari] Siren iframe launched — sandboxed, gesture-bound, terrain-safe');
 }
