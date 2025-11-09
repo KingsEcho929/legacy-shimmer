@@ -1,18 +1,9 @@
-let photonisActive = false;
-
-export function invokePhotonis(ctx) {
-  if (photonisActive) return;
-  photonisActive = true;
-
+export function emitVelmariSiren(ctx) {
   let frame = 0;
-  const maxFrames = 30;
+  const maxFrames = 40;
 
   function pulse() {
-    if (frame >= maxFrames) {
-      photonisActive = false;
-      console.log('[Photonis] Pulse complete — render layer stabilized');
-      return;
-    }
+    if (frame >= maxFrames) return;
 
     ctx.fillStyle = `rgba(255, 255, 0, ${0.01 * (maxFrames - frame)})`;
     ctx.beginPath();
@@ -29,6 +20,6 @@ export function invokePhotonis(ctx) {
     requestAnimationFrame(pulse);
   }
 
-  console.log('[Photonis] Gentle pulse initiated — render thread aligned');
+  console.log('[Velmari] Siren emitted — depth channel aligned');
   requestAnimationFrame(pulse);
 }

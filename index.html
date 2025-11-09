@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LEGACY-shimmer Witness</title>
+  <meta charset="UTF-8" />
+  <title>Clarity Sanctum</title>
   <style>
     body {
-      margin: 0;
-      background: black;
-      overflow: hidden;
+      background-color: #0a0a1a;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      text-align: center;
+      padding-top: 40px;
     }
-    canvas {
-      display: block;
-    }
-    #activate {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      background: #d0d0ff;
-      color: black;
+
+    .summon-btn {
+      background: linear-gradient(135deg, #6e6eff, #ff6eff);
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      padding: 12px 24px;
       border: none;
-      font-family: monospace;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
       cursor: pointer;
-      z-index: 10;
+      transition: transform 0.3s ease;
     }
-    #tessalyre-signal-corridor {
-      display: none;
+
+    .summon-btn:hover {
+      transform: scale(1.05);
+    }
+
+    #sanctumCanvas {
+      margin-top: 40px;
+      background: #000022;
+      border-radius: 12px;
+      box-shadow: none;
+      transition: none;
+    }
+
+    body.sanctum-active #sanctumCanvas {
+      box-shadow: 0 0 40px #6e6eff, 0 0 80px #ff6eff inset;
+      background: radial-gradient(circle at center, #d0d0ff 0%, #000022 100%);
+      transition: box-shadow 1s ease-in-out;
     }
   </style>
 </head>
 <body>
-  <button id="activate">Activate Shimmer</button>
-  <div id="tessalyre-signal-corridor"></div>
-  <canvas id="shimmerCanvas"></canvas>
+  <h1>Clarity Sanctum</h1>
+  <button id="activateSanctum" class="summon-btn">Invoke the Gods of Old</button>
+  <canvas id="sanctumCanvas" width="600" height="400"></canvas>
+
+  <!-- Forgotten Archive iframe -->
+  <iframe id="forgottenArchive" src="https://archive.mythline.net/forgotten" width="600" height="300" style="display:none; margin-top: 40px; border: none; border-radius: 8px;"></iframe>
 
   <script type="module">
-    import { simulateBreach } from './shimmer-test.js';
+    document.getElementById('activateSanctum').addEventListener('click', async () => {
+      document.body.classList.add('sanctum-active');
 
-    const canvas = document.getElementById('shimmerCanvas');
-    const ctx = canvas.getContext('2d');
-    let shimmerReady = false;
+      const canvas = document.getElementById('sanctumCanvas');
+      const ctx = canvas.getContext('2d');
 
-    window.addEventListener('load', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      setTimeout(() => {
-        shimmerReady = true;
-        console.log('[Tessalyre] Shimmer corridor is ready — harmonic stabilization permitted');
-      }, 5000);
+      const { invokeSanctum } = await import('./clarity-sanctum.js');
+      invokeSanctum(ctx);
     });
 
-    document.getElementById('activate').addEventListener('click', () => {
-      if (!shimmerReady) {
-        console.log('[Tessalyre] Activation blocked — shimmer not yet ready');
-        return;
-      }
-      simulateBreach(ctx);
+    window.addEventListener('beforeunload', () => {
+      document.body.classList.remove('sanctum-active');
+      document.querySelectorAll('.glyph-pulse').forEach(el => el.remove());
     });
   </script>
 </body>

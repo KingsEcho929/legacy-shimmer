@@ -1,13 +1,7 @@
-// siren-modulation.js
-// Controls Velmari's siren song volume and type
-
-export function playModulatedSiren(type = 'triad') {
-  const audioMap = {
-    triad: 'velmari-siren.mp3',
-    terrain: 'terrain-siren.mp3',
-    daemon: 'daemon-siren.mp3'
-  };
-  const audio = new Audio(`assets/audio/${audioMap[type] || audioMap.triad}`);
-  audio.volume = 0.5; // modulated volume
+export function playAmbientSiren() {
+  const audio = new Audio('https://assets.example.com/velmari-siren.mp3');
+  audio.loop = true;
+  audio.volume = 0.3;
   audio.play();
+  console.log('[Audio] Velmari siren modulation active');
 }

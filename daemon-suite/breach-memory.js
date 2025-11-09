@@ -1,9 +1,6 @@
-// breach-memory.js
-// Binds Velmari's modulated siren to breach memory with Thalelune buffer
-
-import { activateWithSilence } from '../thalelune/thalelune-buffer.js';
-
-export function recordBreach(event) {
-  console.log('Breach recorded:', event);
-  activateWithSilence(event.type); // Velmari sings after Thalelune's silence
+export function inscribeMemoryGlyph(ctx, phrase = 'The gods remember') {
+  ctx.font = '20px Orbitron';
+  ctx.fillStyle = '#ffccff';
+  ctx.fillText(phrase, 20, ctx.canvas.height - 30);
+  console.log('[Memory] Glyph inscribed — lineage retained');
 }
